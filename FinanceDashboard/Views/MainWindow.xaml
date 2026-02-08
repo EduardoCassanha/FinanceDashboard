@@ -5,16 +5,35 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:FinanceDashboard.ViewModels"
         mc:Ignorable="d"
-        Title="{Binding AppName}" Height="450" Width="800">
-
+        Title="{Binding AppName}"
+        Height="450"
+        Width="800">
+    
     <Window.DataContext>
         <vm:MainViewModel />
     </Window.DataContext>
 
     <Grid>
-        <TextBlock Text="{Binding WelcomeMessage}" 
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <TextBlock Text="{Binding WelcomeMessage}"
+                   Grid.Row="0"
                    FontSize="24" 
-                   HorizontalAlignment="Center" 
-                   VerticalAlignment="Center"/>
+                   HorizontalAlignment="Center"/>
+
+        <ItemsControl Grid.Row="1" ItemsSource="{Binding Transactions}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Title}" Width="150"/>
+                        <TextBlock Text="{Binding Amount, StringFormat='{}{0:C}'}" Width="150"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
     </Grid>
+    
 </Window>
